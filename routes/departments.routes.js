@@ -16,20 +16,20 @@ router.get('/departments/random', (req, res) => {
   });
 });
 
-router.get('departments/:id', (req, res) => {
+router.get('/departments/:id', (req, res) => {
   req.db.collection('departments').findOne({ _id: ObjectId(req.params.id) }, (err, data) => {
     if (err) res.status(500).json({ message: err });
     else if (!data) res.status(404).json({ message: 'Not found' });
     else res.json(data);
-  })
+  });
 });
 
 router.post('/departments', (req, res) => {
   const { name } = req.body;
   req.db.collection('departments').insertOne({ name: name }, err => {
     if (err) res.status(500).json({ message: err });
-    else res.status(304).json({ message: 'ok' });
-  });
+    else res.status(201).json({ message: 'OK' });
+  })
 });
 
 router.put('/departments/:id', (req, res) => {
@@ -37,14 +37,14 @@ router.put('/departments/:id', (req, res) => {
   req.db.collection('departments').updateOne({ _id: ObjectId(req.params.id) }, { $set: { name: name } }, err => {
     if (err) res.status(500).json({ message: err });
     else res.json({ message: 'OK' });
-  })
+  });
 });
 
 router.delete('/departments/:id', (req, res) => {
   req.db.collection('departments').deleteOne({ _id: ObjectId(req.params.id) }, err => {
     if (err) res.status(500).json({ message: err });
     else res.json({ message: 'OK' });
-  })
+  });
 });
 
 module.exports = router;

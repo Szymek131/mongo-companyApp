@@ -1,5 +1,3 @@
-// post.routes.js
-
 const express = require('express');
 const router = express.Router();
 const ObjectId = require('mongodb').ObjectId;
@@ -18,7 +16,7 @@ router.get('/products/random', (req, res) => {
   });
 });
 
-router.get('products/:id', (req, res) => {
+router.get('/products/:id', (req, res) => {
   req.db.collection('products').findOne({ _id: ObjectId(req.params.id) }, (err, data) => {
     if (err) res.status(500).json({ message: err });
     else if (!data) res.status(404).json({ message: 'Not found' });
@@ -30,7 +28,7 @@ router.post('/products', (req, res) => {
   const { name, client } = req.body;
   req.db.collection('products').insertOne({ name: name, client: client }, err => {
     if (err) res.status(500).json({ message: err });
-    else res.status(304).json({ message: 'ok' });
+    else res.status(201).json({ message: 'ok' });
   });
 });
 
