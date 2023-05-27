@@ -10,7 +10,6 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getRandom = async (req, res) => {
-
   try {
     const count = await Department.countDocuments();
     const rand = Math.floor(Math.random() * count);
@@ -21,11 +20,9 @@ exports.getRandom = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.getById = async (req, res) => {
-
   try {
     const dep = await Department.findById(req.params.id);
     if (!dep) res.status(404).json({ message: 'Not found' });
@@ -34,7 +31,6 @@ exports.getById = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.post = async (req, res) => {
@@ -52,7 +48,6 @@ exports.post = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { name } = req.body;
-
   try {
     const dep = await Department.findById(req.params.id);
     if (dep) {
@@ -65,11 +60,9 @@ exports.update = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.delete = async (req, res) => {
-
   try {
     const dep = await Department.findById(req.params.id);
     if (dep) {
@@ -81,5 +74,4 @@ exports.delete = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };

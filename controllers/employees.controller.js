@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const Employee = require('../models/employee.model')
 
 exports.getAll = async (req, res) => {
@@ -11,7 +9,6 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getRandom = async (req, res) => {
-
   try {
     const count = await Employee.countDocuments();
     const rand = Math.floor(Math.random() * count);
@@ -22,11 +19,9 @@ exports.getRandom = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.getById = async (req, res) => {
-
   try {
     const emp = await Employee.findById(req.params.id).populate('department');
     if (!emp) res.status(404).json({ message: 'Not found' });
@@ -35,17 +30,14 @@ exports.getById = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.post = async (req, res) => {
   try {
-
     const { firstName, lastName, department } = req.body;
     const newEmployee = new Employee({ firstName: firstName, lastName: lastName, department: department });
     await newEmployee.save();
     res.json({ message: 'OK', newEmployee });
-
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -53,7 +45,6 @@ exports.post = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { firstName, lastName, department } = req.body;
-
   try {
     const emp = await Employee.findById(req.params.id);
     if (emp) {
@@ -68,11 +59,9 @@ exports.update = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.delete = async (req, res) => {
-
   try {
     const emp = await Employee.findById(req.params.id);
     if (emp) {
@@ -84,5 +73,4 @@ exports.delete = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };

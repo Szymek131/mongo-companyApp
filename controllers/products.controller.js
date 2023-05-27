@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const Product = require('../models/product.model');
 
 exports.getAll = async (req, res) => {
@@ -11,7 +9,6 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getRandom = async (req, res) => {
-
   try {
     const count = await Product.countDocuments();
     const rand = Math.floor(Math.random() * count);
@@ -22,11 +19,9 @@ exports.getRandom = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.getById = async (req, res) => {
-
   try {
     const prod = await Product.findById(req.params.id);
     if (!prod) res.status(404).json({ message: 'Not found' });
@@ -35,17 +30,14 @@ exports.getById = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.post = async (req, res) => {
   try {
-
     const { name, client } = req.body;
     const newProduct = new Product({ name: name, client: client });
     await newProduct.save();
     res.json({ message: 'OK', newProduct });
-
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -53,7 +45,6 @@ exports.post = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { name, client } = req.body;
-
   try {
     const prod = await Product.findById(req.params.id);
     if (prod) {
@@ -67,11 +58,9 @@ exports.update = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
 
 exports.delete = async (req, res) => {
-
   try {
     const prod = await Product.findById(req.params.id);
     if (prod) {
@@ -83,5 +72,4 @@ exports.delete = async (req, res) => {
   catch (err) {
     res.status(500).json({ message: err });
   }
-
 };
